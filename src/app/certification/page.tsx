@@ -3,11 +3,18 @@
 import { useState } from "react";
 import StaggerdMenu from "@/components/StaggerdMenu";
 import GradientText from "@/components/GradientText";
-import FileUpload from "@/components/FileUpload";
+import Stepper, { Step } from "@/components/Stepper";
+import LogoSettings from "@/components/certification/LogoSettings";
+import BackgroundSettings from "@/components/certification/BackgroundSettings";
+import CertificatePreview from "@/components/certification/CertificatePreview";
 
 export default function CertificationPage() {
-  const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoText, setLogoText] = useState("크루명");
+  const [logoFont, setLogoFont] = useState("Arial");
+  const [logoFontSize, setLogoFontSize] = useState(16);
+  const [logoPosition, setLogoPosition] = useState({ x: 20, y: 20 });
+  const [logoSize, setLogoSize] = useState({ width: 100, height: 60 });
   const [description, setDescription] = useState("");
   const [backgroundColor, setBackgroundColor] = useState("#000000");
   const [backgroundPreview, setBackgroundPreview] = useState<string | null>(
@@ -15,12 +22,15 @@ export default function CertificationPage() {
   );
 
   const handleLogoUpload = (file: File) => {
-    setLogoFile(file);
     const reader = new FileReader();
     reader.onload = (e) => {
       setLogoPreview(e.target?.result as string);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleLogoRemove = () => {
+    setLogoPreview(null);
   };
 
   const handleBackgroundUpload = (file: File) => {
@@ -31,11 +41,133 @@ export default function CertificationPage() {
     reader.readAsDataURL(file);
   };
 
-  const extractColorsFromLogo = () => {
-    // TODO: Implement color extraction from logo
-    const colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#f9ca24", "#6c5ce7"];
+  const handleBackgroundRemove = () => {
+    setBackgroundPreview(null);
+  };
+
+  const generateRandomColor = () => {
+    const colors = [
+      "#ff6b6b",
+      "#4ecdc4",
+      "#45b7d1",
+      "#f9ca24",
+      "#6c5ce7",
+      "#e17055",
+      "#00b894",
+      "#0984e3",
+      "#fdcb6e",
+      "#a29bfe",
+      "#fd79a8",
+      "#00cec9",
+      "#74b9ff",
+      "#ffeaa7",
+      "#dda0dd",
+      "#ff7675",
+      "#00b894",
+      "#6c5ce7",
+      "#fdcb6e",
+      "#fd79a8",
+    ];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     setBackgroundColor(randomColor);
+  };
+
+  const extractColorsFromLogo = () => {
+    if (!logoPreview) return;
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      // Canvas 생성하여 이미지 분석
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) return;
+
+      // 이미지를 작은 크기로 리사이즈하여 성능 최적화
+      const size = 50;
+      canvas.width = size;
+      canvas.height = size;
+
+      ctx.drawImage(img, 0, 0, size, size);
+
+      // 픽셀 데이터 추출
+      const imageData = ctx.getImageData(0, 0, size, size);
+      const data = imageData.data;
+
+      // 색상 빈도 계산
+      const colorMap = new Map<string, number>();
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const a = data[i + 3];
+
+        // 투명하거나 너무 밝거나 어두운 색상 제외
+        if (
+          a < 128 ||
+          (r > 240 && g > 240 && b > 240) ||
+          (r < 15 && g < 15 && b < 15)
+        ) {
+          continue;
+        }
+
+        // 색상을 그룹화하기 위해 값을 반올림
+        const roundedR = Math.round(r / 32) * 32;
+        const roundedG = Math.round(g / 32) * 32;
+        const roundedB = Math.round(b / 32) * 32;
+
+        const colorKey = `${roundedR},${roundedG},${roundedB}`;
+        colorMap.set(colorKey, (colorMap.get(colorKey) || 0) + 1);
+      }
+
+      if (colorMap.size === 0) {
+        // 추출된 색상이 없으면 기본 색상 사용
+        const fallbackColors = [
+          "#ff6b6b",
+          "#4ecdc4",
+          "#45b7d1",
+          "#f9ca24",
+          "#6c5ce7",
+        ];
+        const randomColor =
+          fallbackColors[Math.floor(Math.random() * fallbackColors.length)];
+        setBackgroundColor(randomColor);
+        return;
+      }
+
+      // 가장 빈도가 높은 색상들을 정렬
+      const sortedColors = Array.from(colorMap.entries())
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 5);
+
+      // 가장 빈도가 높은 색상을 배경색으로 설정
+      const [mostFrequentColor] = sortedColors[0];
+      const [r, g, b] = mostFrequentColor.split(",").map(Number);
+
+      // RGB를 HEX로 변환
+      const hex = `#${r.toString(16).padStart(2, "0")}${g
+        .toString(16)
+        .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+      setBackgroundColor(hex);
+    };
+
+    img.onerror = () => {
+      // 이미지 로드 실패시 기본 색상 사용
+      const fallbackColors = [
+        "#ff6b6b",
+        "#4ecdc4",
+        "#45b7d1",
+        "#f9ca24",
+        "#6c5ce7",
+      ];
+      const randomColor =
+        fallbackColors[Math.floor(Math.random() * fallbackColors.length)];
+      setBackgroundColor(randomColor);
+    };
+
+    img.src = logoPreview;
   };
 
   return (
@@ -57,234 +189,98 @@ export default function CertificationPage() {
           </p>
         </div>
 
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto'>
-          {/* Left Side - Template Setup */}
-          <div className='space-y-8'>
-            <div className='bg-white/5 backdrop-blur-sm rounded-lg border border-white/20 p-6'>
-              {/* Progress Stepper - placeholder for now */}
-              <div className='mb-8'>
-                <div className='flex items-center justify-between mb-4'>
-                  <div className='flex items-center space-x-2'>
-                    <div className='w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-sm font-bold'>
-                      1
-                    </div>
-                    <span className='text-sm font-medium'>기본 설정</span>
-                  </div>
-                  <div className='flex-1 mx-4 h-1 bg-gray-600 rounded'>
-                    <div className='h-full bg-green-500 rounded w-1/3'></div>
-                  </div>
-                  <div className='flex items-center space-x-2'>
-                    <div className='w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold'>
-                      2
-                    </div>
-                    <span className='text-sm font-medium text-gray-400'>
-                      참가자 입력
-                    </span>
-                  </div>
-                </div>
-              </div>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto'>
+          {/* Left: Stepper */}
+          <div>
+            <Stepper
+              initialStep={1}
+              nextButtonText='다음 단계'
+              backButtonText='이전'
+              stepCircleContainerClassName='w-full'
+              className='h-full'
+            >
+              <Step>
+                <div className='space-y-6'>
+                  <h2 className='text-2xl font-bold mb-6 text-center text-white'>
+                    템플릿 설정
+                  </h2>
 
-              {/* Form Fields */}
-              <div className='space-y-6'>
-                {/* Logo Upload */}
-                <div>
-                  <label className='block text-sm font-medium mb-2'>
-                    크루 로고
-                  </label>
-                  {logoPreview ? (
-                    <div className='relative'>
-                      <img
-                        src={logoPreview}
-                        alt='Logo preview'
-                        className='w-full h-32 object-contain bg-gray-800 rounded-lg'
-                      />
-                      <button
-                        onClick={() => {
-                          setLogoFile(null);
-                          setLogoPreview(null);
-                        }}
-                        className='absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs hover:bg-red-600'
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ) : (
-                    <FileUpload
-                      onFileSelect={handleLogoUpload}
-                      accept='image/*'
-                      maxSize={5}
-                    />
-                  )}
-                </div>
-
-                {/* Description */}
-                <div>
-                  <label className='block text-sm font-medium mb-2'>
-                    소개글
-                  </label>
-                  <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className='w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
-                    rows={3}
-                    placeholder='크루 소개글을 입력하세요...'
+                  {/* Logo Setup */}
+                  <LogoSettings
+                    logoFile={null}
+                    logoPreview={logoPreview}
+                    logoText={logoText}
+                    logoFont={logoFont}
+                    logoFontSize={logoFontSize}
+                    onLogoUpload={handleLogoUpload}
+                    onLogoRemove={handleLogoRemove}
+                    onLogoTextChange={setLogoText}
+                    onLogoFontChange={setLogoFont}
+                    onLogoFontSizeChange={setLogoFontSize}
                   />
-                  <p className='text-xs text-gray-400 mt-1'>
-                    {description.length}/200자
-                  </p>
-                </div>
 
-                {/* Background Options */}
-                <div>
-                  <label className='block text-sm font-medium mb-2'>
-                    배경 설정
-                  </label>
-                  <div className='space-y-4'>
-                    {/* Color Picker */}
-                    <div>
-                      <label className='block text-xs font-medium mb-2 text-gray-400'>
-                        배경 색상
-                      </label>
-                      <div className='flex items-center space-x-4'>
-                        <input
-                          type='color'
-                          value={backgroundColor}
-                          onChange={(e) => setBackgroundColor(e.target.value)}
-                          className='w-12 h-12 rounded-lg border border-white/20 cursor-pointer'
-                        />
-                        <span className='text-sm text-gray-400'>또는</span>
-                        <button
-                          onClick={extractColorsFromLogo}
-                          disabled={!logoFile}
-                          className='px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
-                        >
-                          로고에서 색상 추출
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Background Image */}
-                    <div>
-                      <label className='block text-xs font-medium mb-2 text-gray-400'>
-                        배경 이미지 (선택사항)
-                      </label>
-                      {backgroundPreview ? (
-                        <div className='relative'>
-                          <img
-                            src={backgroundPreview}
-                            alt='Background preview'
-                            className='w-full h-24 object-cover bg-gray-800 rounded-lg'
-                          />
-                          <button
-                            onClick={() => {
-                              setBackgroundPreview(null);
-                            }}
-                            className='absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs hover:bg-red-600'
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ) : (
-                        <FileUpload
-                          onFileSelect={handleBackgroundUpload}
-                          accept='image/*'
-                          maxSize={10}
-                          className=''
-                        >
-                          <div className='text-gray-500 text-sm py-4'>
-                            <p>배경 이미지 업로드 (선택사항)</p>
-                          </div>
-                        </FileUpload>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className='flex space-x-4 pt-6'>
-                  <button className='flex-1 px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors'>
-                    초기화
-                  </button>
-                  <button className='flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors'>
-                    미리보기
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side - Live Preview */}
-          <div className='space-y-8'>
-            <div className='bg-white/5 backdrop-blur-sm rounded-lg border border-white/20 p-6'>
-              {/* <h2 className="text-2xl font-bold mb-6">실시간 미리보기</h2> */}
-
-              {/* Certificate Preview */}
-              <div
-                className='aspect-[4/3] border border-white/20 rounded-lg p-8 flex flex-col justify-center items-center relative overflow-hidden'
-                style={{
-                  backgroundColor: backgroundColor,
-                  backgroundImage: backgroundPreview
-                    ? `url(${backgroundPreview})`
-                    : "none",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              >
-                {backgroundPreview && (
-                  <div className='absolute inset-0 bg-black/40'></div>
-                )}
-
-                <div className='text-center space-y-6 relative z-10'>
-                  {/* Logo */}
-                  {logoPreview ? (
-                    <img
-                      src={logoPreview}
-                      alt='Logo'
-                      className='w-16 h-16 object-contain mx-auto'
-                    />
-                  ) : (
-                    <div className='w-16 h-16 bg-gray-600 rounded-full mx-auto'></div>
-                  )}
-
-                  {/* Certificate Title */}
+                  {/* Description */}
                   <div>
-                    <h3 className='text-2xl font-bold text-white mb-2'>
-                      MARATHON CERTIFICATE
-                    </h3>
-                    <p className='text-gray-200 text-sm'>
-                      {description || "크루 소개글이 여기에 표시됩니다"}
+                    <label className='block text-sm font-medium mb-2 text-white'>
+                      소개글
+                    </label>
+                    <textarea
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      className='w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
+                      rows={3}
+                      placeholder='크루 소개글을 입력하세요...'
+                    />
+                    <p className='text-xs text-gray-400 mt-1'>
+                      {description.length}/200자
                     </p>
                   </div>
 
-                  {/* Participant Info Placeholder */}
-                  <div className='space-y-2 text-center'>
-                    <p className='text-lg font-semibold text-white'>참가자명</p>
-                    <p className='text-sm text-gray-200'>
-                      거리: 00km | 시간: 00:00:00
+                  {/* Background Options */}
+                  <BackgroundSettings
+                    backgroundColor={backgroundColor}
+                    backgroundPreview={backgroundPreview}
+                    logoPreview={logoPreview}
+                    onBackgroundColorChange={setBackgroundColor}
+                    onBackgroundUpload={handleBackgroundUpload}
+                    onBackgroundRemove={handleBackgroundRemove}
+                    onRandomColor={generateRandomColor}
+                    onExtractColor={extractColorsFromLogo}
+                  />
+                </div>
+              </Step>
+
+              <Step>
+                <div className='space-y-6'>
+                  <h2 className='text-2xl font-bold mb-6 text-center text-white'>
+                    참가자 기록 입력
+                  </h2>
+
+                  <div className='text-center text-gray-400'>
+                    <p>참가자 기록 입력 폼이 여기에 표시됩니다.</p>
+                    <p className='mt-2'>
+                      개별 입력 또는 CSV 파일 업로드가 가능합니다.
                     </p>
-                    <p className='text-sm text-gray-200'>날짜: YYYY-MM-DD</p>
                   </div>
                 </div>
-              </div>
-
-              <p className='text-sm text-gray-400 mt-4 text-center'>
-                왼쪽에서 설정을 변경하면 실시간으로 반영됩니다
-              </p>
-            </div>
-
-            {/* Next Step Button */}
-            <div className='text-center'>
-              <button
-                className='px-8 py-4 bg-green-600 text-white rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
-                disabled
-              >
-                참여자 기록 입력하기
-              </button>
-              <p className='text-sm text-gray-400 mt-2'>
-                템플릿 설정을 완료하면 활성화됩니다
-              </p>
-            </div>
+              </Step>
+            </Stepper>
           </div>
+
+          {/* Right: Live Preview */}
+          <CertificatePreview
+            backgroundColor={backgroundColor}
+            backgroundPreview={backgroundPreview}
+            logoPreview={logoPreview}
+            logoText={logoText}
+            logoFont={logoFont}
+            logoFontSize={logoFontSize}
+            logoPosition={logoPosition}
+            logoSize={logoSize}
+            description={description}
+            onLogoPositionChange={setLogoPosition}
+            onLogoSizeChange={setLogoSize}
+          />
         </div>
       </div>
     </div>
