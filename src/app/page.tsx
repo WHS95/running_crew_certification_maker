@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { gsap } from "gsap";
+import { useRouter } from "next/navigation";
 import ScrollFloat from "@/components/ScrollFloat";
 import StaggerdMenu from "@/components/StaggerdMenu";
 import DarkVeil from "@/components/DarkVeil";
@@ -10,21 +11,60 @@ import SpotlightCard from "@/components/SpotlightCard";
 import DecryptedText from "@/components/DecryptedText";
 
 export default function Home() {
+  const router = useRouter();
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll(".scroll-section");
 
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
-        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+        const isInView =
+          rect.top < window.innerHeight * 1.2 &&
+          rect.bottom > -window.innerHeight * 0.2;
+
+        if (isInView) {
+          const progress = Math.max(
+            0,
+            Math.min(
+              1,
+              (window.innerHeight - rect.top) /
+                (window.innerHeight + rect.height * 0.5)
+            )
+          );
+
+          gsap.to(section, {
+            opacity: Math.max(0.4, 1 - progress * 0.6),
+            scale: Math.max(0.85, 1 - progress * 0.15),
+            y: progress * -50,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        } else {
+          gsap.to(section, {
+            opacity: 0.3,
+            scale: 0.85,
+            y: rect.top < 0 ? -50 : 50,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+      });
+
+      // 개별 요소들 애니메이션
+      const animatedElements = document.querySelectorAll(".scroll-animate");
+      animatedElements.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        const isInView =
+          rect.top < window.innerHeight * 0.9 &&
+          rect.bottom > window.innerHeight * 0.1;
 
         if (isInView) {
           const progress =
-            (window.innerHeight - rect.top) /
-            (window.innerHeight + rect.height);
-          gsap.to(section, {
-            opacity: Math.max(0.3, 1 - progress * 0.7),
-            scale: Math.max(0.8, 1 - progress * 0.2),
+            (window.innerHeight * 0.9 - rect.top) / (window.innerHeight * 0.8);
+          gsap.to(element, {
+            opacity: Math.max(0.7, 1 - Math.abs(progress - 0.5) * 0.6),
+            scale: Math.max(0.9, 1 - Math.abs(progress - 0.5) * 0.2),
             duration: 0.3,
             ease: "power2.out",
           });
@@ -32,6 +72,7 @@ export default function Home() {
       });
     };
 
+    handleScroll(); // 초기 실행
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -76,6 +117,17 @@ export default function Home() {
             >
               Made by RunHouseClub
             </GradientText>
+
+            <div className='mt-16 mb-16'>
+              <button
+                className='bg-white text-black px-8 py-4 rounded-full text-lg font-semibold'
+                onClick={() => {
+                  router.push("/create");
+                }}
+              >
+                시작하기
+              </button>
+            </div>
           </ScrollFloat>
         </div>
       </section>
@@ -95,64 +147,57 @@ export default function Home() {
               자체 마라톤 기록을 정식 마라톤 대회 기록증처럼 만들어보세요
             </GradientText>
           </div>
-          <div className='text-center max-w-4xl mx-auto px-8'></div>
-          <ScrollFloat speed={0.1}>
-            <div className='grid md:grid-cols-3 gap-8 mt-16'>
-              <SpotlightCard
-                className='p-6 h-80'
-                spotlightColor='rgba(64, 255, 170, 0.15)'
-                spotlightSize={250}
-              >
-                <div className='text-center h-full flex flex-col justify-center'>
-                  <h3 className='text-xl font-bold mb-3 text-white'>
-                    커스텀 디자인
-                  </h3>
-                  <p className='text-gray-300 text-sm'>
-                    로고, 색상, 배경을 자유롭게 설정하여 크루만의 기록증을
-                    만드세요
-                  </p>
-                </div>
-              </SpotlightCard>
-
-              <SpotlightCard
-                className='p-6 h-80'
-                spotlightColor='rgba(64, 121, 255, 0.15)'
-                spotlightSize={250}
-              >
-                <div className='text-center h-full flex flex-col justify-center'>
-                  <h3 className='text-xl font-bold mb-3 text-white'>
-                    대량 처리
-                  </h3>
-                  <p className='text-gray-300 text-sm'>
-                    CSV 파일로 여러 참가자의 기록을 한번에 입력하고 관리하세요
-                  </p>
-                </div>
-              </SpotlightCard>
-
-              <SpotlightCard
-                className='p-6 h-80'
-                spotlightColor='rgba(255, 100, 255, 0.15)'
-                spotlightSize={250}
-              >
-                <div className='text-center h-full flex flex-col justify-center'>
-                  <h3 className='text-xl font-bold mb-3 text-white'>
-                    쉬운 공유
-                  </h3>
-                  <p className='text-white/30 text-sm'>
-                    카카오톡 공유와 이미지 다운로드로 간편하게 배포하세요
-                  </p>
-                </div>
-              </SpotlightCard>
-            </div>
-
-            <div className='text-center max-w-4xl mx-auto px-8'>
-              <div className='mt-16 mb-16'>
-                <button className='bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-200 transition-colors'>
-                  시작하기
-                </button>
+          <div className='grid md:grid-cols-3 gap-8 mt-16 scroll-animate'>
+            <SpotlightCard
+              className='p-6 h-80'
+              spotlightColor='rgba(64, 255, 170, 0.15)'
+              spotlightSize={250}
+            >
+              <div className='text-center h-full flex flex-col justify-center'>
+                <h3 className='text-xl font-bold mb-3 text-white'>
+                  커스텀 디자인
+                </h3>
+                <p className='text-gray-300 text-sm'>
+                  로고, 색상, 배경을 자유롭게 설정하여 크루만의 기록증을
+                  만드세요
+                </p>
               </div>
+            </SpotlightCard>
+
+            <SpotlightCard
+              className='p-6 h-80'
+              spotlightColor='rgba(64, 121, 255, 0.15)'
+              spotlightSize={250}
+            >
+              <div className='text-center h-full flex flex-col justify-center'>
+                <h3 className='text-xl font-bold mb-3 text-white'>대량 처리</h3>
+                <p className='text-gray-300 text-sm'>
+                  CSV 파일로 여러 참가자의 기록을 한번에 입력하고 관리하세요
+                </p>
+              </div>
+            </SpotlightCard>
+
+            <SpotlightCard
+              className='p-6 h-80'
+              spotlightColor='rgba(255, 100, 255, 0.15)'
+              spotlightSize={250}
+            >
+              <div className='text-center h-full flex flex-col justify-center'>
+                <h3 className='text-xl font-bold mb-3 text-white'>쉬운 공유</h3>
+                <p className='text-white/30 text-sm'>
+                  카카오톡 공유와 이미지 다운로드로 간편하게 배포하세요
+                </p>
+              </div>
+            </SpotlightCard>
+          </div>
+
+          {/* <div className='text-center max-w-4xl mx-auto px-8 scroll-animate'>
+            <div className='mt-16 mb-16'>
+              <button className='bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-200 transition-colors'>
+                시작하기
+              </button>
             </div>
-          </ScrollFloat>
+          </div> */}
         </ScrollFloat>
       </section>
     </div>
