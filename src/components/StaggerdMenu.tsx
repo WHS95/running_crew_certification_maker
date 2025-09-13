@@ -98,8 +98,8 @@ export default function StaggerdMenu() {
 
       <nav
         ref={menuRef}
-        className={`fixed top-0 left-0 h-full w-80 z-40 pointer-events-none ${
-          isOpen ? 'pointer-events-auto' : ''
+        className={`fixed top-0 left-0 h-full w-80 z-40 transform transition-transform duration-500 ease-out ${
+          isOpen ? 'translate-x-0 pointer-events-auto' : '-translate-x-full pointer-events-none'
         }`}
       >
         <div className="h-full bg-black/80 backdrop-blur-lg border-r border-white/20">
