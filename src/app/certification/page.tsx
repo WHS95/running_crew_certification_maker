@@ -7,6 +7,8 @@ import Stepper, { Step } from "@/components/Stepper";
 import LogoSettings from "@/components/certification/LogoSettings";
 import BackgroundSettings from "@/components/certification/BackgroundSettings";
 import CertificatePreview from "@/components/certification/CertificatePreview";
+import ParticipantForm, { ParticipantData } from "@/components/certification/ParticipantForm";
+import CSVUpload from "@/components/certification/CSVUpload";
 
 export default function CertificationPage() {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -20,6 +22,7 @@ export default function CertificationPage() {
   const [backgroundPreview, setBackgroundPreview] = useState<string | null>(
     null
   );
+  const [participants, setParticipants] = useState<ParticipantData[]>([]);
 
   const handleLogoUpload = (file: File) => {
     const reader = new FileReader();
@@ -170,6 +173,24 @@ export default function CertificationPage() {
     img.src = logoPreview;
   };
 
+  const handleAddParticipant = (participant: ParticipantData) => {
+    setParticipants(prev => [...prev, participant]);
+  };
+
+  const handleUpdateParticipant = (id: string, updates: Partial<ParticipantData>) => {
+    setParticipants(prev => 
+      prev.map(p => p.id === id ? { ...p, ...updates } : p)
+    );
+  };
+
+  const handleRemoveParticipant = (id: string) => {
+    setParticipants(prev => prev.filter(p => p.id !== id));
+  };
+
+  const handleCSVUpload = (csvParticipants: ParticipantData[]) => {
+    setParticipants(prev => [...prev, ...csvParticipants]);
+  };
+
   return (
     <div className='min-h-screen bg-black text-white relative'>
       <StaggerdMenu />
@@ -251,17 +272,50 @@ export default function CertificationPage() {
               </Step>
 
               <Step>
-                <div className='space-y-6'>
+                <div className='space-y-8'>
                   <h2 className='text-2xl font-bold mb-6 text-center text-white'>
                     참가자 기록 입력
                   </h2>
 
-                  <div className='text-center text-gray-400'>
-                    <p>참가자 기록 입력 폼이 여기에 표시됩니다.</p>
-                    <p className='mt-2'>
-                      개별 입력 또는 CSV 파일 업로드가 가능합니다.
-                    </p>
+                  {/* 탭 형태로 개별 입력과 CSV 업로드 구분 */}
+                  <div className='grid grid-cols-1 xl:grid-cols-2 gap-8'>
+                    {/* 개별 입력 */}
+                    <div>
+                      <ParticipantForm
+                        onAdd={handleAddParticipant}
+                        onUpdate={handleUpdateParticipant}
+                        onRemove={handleRemoveParticipant}
+                        participants={participants}
+                      />
+                    </div>
+
+                    {/* CSV 업로드 */}
+                    <div>
+                      <CSVUpload onUpload={handleCSVUpload} />
+                    </div>
                   </div>
+
+                  {/* 참가자 수 요약 */}
+                  {participants.length > 0 && (
+                    <div className='bg-green-500/10 border border-green-500/30 rounded-lg p-4'>
+                      <div className='flex items-center justify-between'>
+                        <div>
+                          <h4 className='text-green-300 font-medium'>
+                            📊 총 {participants.length}명의 참가자가 등록되었습니다.
+                          </h4>
+                          <p className='text-sm text-green-200 mt-1'>
+                            다음 단계에서 기록증을 생성할 수 있습니다.
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => setParticipants([])}
+                          className='px-3 py-1 bg-red-500/20 text-red-300 border border-red-500/30 rounded text-sm hover:bg-red-500/30 transition-colors'
+                        >
+                          전체 삭제
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Step>
             </Stepper>

@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { useRef, useEffect, useState } from 'react'
-import DraggableResizable from '@/components/DraggableResizable'
+import { useRef, useEffect, useState } from "react";
+import DraggableResizable from "@/components/DraggableResizable";
 
 interface CertificatePreviewProps {
-  backgroundColor: string
-  backgroundPreview: string | null
-  logoPreview: string | null
-  logoText: string
-  logoFont: string
-  logoFontSize: number
-  logoPosition: { x: number; y: number }
-  logoSize: { width: number; height: number }
-  description: string
-  onLogoPositionChange: (position: { x: number; y: number }) => void
-  onLogoSizeChange: (size: { width: number; height: number }) => void
+  backgroundColor: string;
+  backgroundPreview: string | null;
+  logoPreview: string | null;
+  logoText: string;
+  logoFont: string;
+  logoFontSize: number;
+  logoPosition: { x: number; y: number };
+  logoSize: { width: number; height: number };
+  description: string;
+  onLogoPositionChange: (position: { x: number; y: number }) => void;
+  onLogoSizeChange: (size: { width: number; height: number }) => void;
 }
 
 export default function CertificatePreview({
@@ -28,15 +28,15 @@ export default function CertificatePreview({
   logoSize,
   description,
   onLogoPositionChange,
-  onLogoSizeChange
+  onLogoSizeChange,
 }: CertificatePreviewProps) {
-  const [containerBounds, setContainerBounds] = useState<DOMRect | null>(null)
-  const certificateRef = useRef<HTMLDivElement>(null)
+  const [containerBounds, setContainerBounds] = useState<DOMRect | null>(null);
+  const certificateRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateBounds = () => {
       if (certificateRef.current) {
-        const rect = certificateRef.current.getBoundingClientRect()
+        const rect = certificateRef.current.getBoundingClientRect();
         // Account for padding (24px on each side = 48px total)
         setContainerBounds({
           ...rect,
@@ -44,36 +44,36 @@ export default function CertificatePreview({
           height: rect.height - 48,
           left: rect.left + 24,
           top: rect.top + 24,
-        } as DOMRect)
+        } as DOMRect);
       }
-    }
+    };
 
-    updateBounds()
-    window.addEventListener('resize', updateBounds)
-    return () => window.removeEventListener('resize', updateBounds)
-  }, [])
+    updateBounds();
+    window.addEventListener("resize", updateBounds);
+    return () => window.removeEventListener("resize", updateBounds);
+  }, []);
 
   return (
     <div className='lg:sticky lg:top-24 lg:self-start'>
       <div className='bg-white/5 backdrop-blur-sm rounded-lg border border-white/20 p-6'>
-        <h3 className='text-2xl font-bold mb-6 text-white text-center'>
-          실시간 미리보기
-        </h3>
-
         {/* A4 비율 Certificate Preview */}
         <div
           ref={certificateRef}
           className='w-full border border-white/20 rounded-lg p-6 flex flex-col justify-between relative overflow-hidden'
           style={{
-            aspectRatio: '210/297', // A4 비율
+            aspectRatio: "210/297", // A4 비율
             backgroundColor: backgroundColor,
-            backgroundImage: backgroundPreview ? `url(${backgroundPreview})` : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            minHeight: '400px',
+            backgroundImage: backgroundPreview
+              ? `url(${backgroundPreview})`
+              : "none",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "400px",
           }}
         >
-          {backgroundPreview && <div className='absolute inset-0 bg-black/40'></div>}
+          {backgroundPreview && (
+            <div className='absolute inset-0 bg-black/40'></div>
+          )}
 
           {/* Certificate Content */}
           <div className='relative z-10 h-full flex flex-col justify-between text-center text-white'>
@@ -99,7 +99,7 @@ export default function CertificatePreview({
                     className='w-full h-full flex items-center justify-center text-white font-bold bg-white/10 rounded border border-white/30 relative cursor-move'
                     style={{
                       fontFamily: logoFont,
-                      lineHeight: '1.2',
+                      lineHeight: "1.2",
                     }}
                   >
                     <span
@@ -110,12 +110,12 @@ export default function CertificatePreview({
                           (logoSize.width / logoText.length) * 1.5,
                           logoSize.height * 0.7
                         )}px`,
-                        maxWidth: '100%',
-                        maxHeight: '100%',
-                        overflow: 'hidden',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        overflow: "hidden",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
                       {logoText}
@@ -152,7 +152,7 @@ export default function CertificatePreview({
               </div>
               <div className='text-center mt-4'>
                 <p className='text-xs opacity-80'>
-                  {description || '크루 소개글이 여기에 표시됩니다'}
+                  {description || "크루 소개글이 여기에 표시됩니다"}
                 </p>
               </div>
             </div>
@@ -164,5 +164,5 @@ export default function CertificatePreview({
         </p>
       </div>
     </div>
-  )
+  );
 }
