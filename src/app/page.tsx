@@ -95,9 +95,9 @@ export default function Home() {
       <StaggerdMenu />
 
       <section className='min-h-screen flex items-center justify-center relative z-10 scroll-section'>
-        <div className='text-center'>
+        <div className='text-center px-4 sm:px-6 md:px-8'>
           <ScrollFloat speed={0.1}>
-            <div className='text-6xl md:text-8xl font-bold mb-8 block'>
+            <div className='text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 block'>
               <GradientText
                 colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
                 animationSpeed={3}
@@ -113,7 +113,7 @@ export default function Home() {
                 characters='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*'
                 animateOn='view'
                 revealDirection='center'
-                className='block mb-4'
+                className='block mb-4 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl'
               />
             </div>
           </ScrollFloat>
@@ -128,7 +128,7 @@ export default function Home() {
 
             <div className='mt-16 mb-16'>
               <button
-                className='bg-white text-black px-24 py-4 rounded-full text-lg font-semibold'
+                className='bg-white text-black px-8 sm:px-12 md:px-16 lg:px-24 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold'
                 onClick={() => {
                   router.push("/create");
                 }}
@@ -141,20 +141,22 @@ export default function Home() {
       </section>
 
       <section className='min-h-screen flex items-center justify-center relative z-10 scroll-section mb-80'>
-        <div className='text-center'>
+        <div className='text-center px-4 sm:px-6 md:px-8'>
           <ScrollFloat speed={0.1}>
-            <div className='text-3xl md:text-8xl font-bold mb-8 block'>
-              <h2 className='text-4xl md:text-6xl font-bold mb-8'>
+            <div className='font-bold mb-8 block'>
+              <h2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-8'>
                 Marathon Certification
               </h2>
 
-              <GradientText
-                colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-                animationSpeed={3}
-                showBorder={false}
-              >
-                우리 크루 만의 마라톤 대회 기록증 제작
-              </GradientText>
+              <div className='text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
+                <GradientText
+                  colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+                  animationSpeed={3}
+                  showBorder={false}
+                >
+                  우리 크루 만의 마라톤 대회 기록증 제작
+                </GradientText>
+              </div>
             </div>
             <div className='grid md:grid-cols-3 gap-8 mt-16 scroll-animate'>
               <SpotlightCard
