@@ -11,7 +11,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { label: "HOME", href: "/", icon: "" },
-  { label: "CREATE", href: "/create", icon: "" },
+  { label: "CREATE", href: "/certification", icon: "" },
   { label: "CONTACT", href: "/contact", icon: "" },
 ];
 
@@ -116,7 +116,9 @@ export default function StaggerdMenu() {
               <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-white mb-1 sm:mb-2'>
                 OUR RUNNING
               </h2>
-              <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-white'>MARATHON</h2>
+              <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-white'>
+                MARATHON
+              </h2>
             </div>
 
             <ul className='space-y-2 sm:space-y-3 md:space-y-4'>
@@ -133,7 +135,9 @@ export default function StaggerdMenu() {
                       className='flex items-center space-x-3 sm:space-x-4 text-white hover:text-gray-300 transition-colors text-base sm:text-lg py-2 sm:py-3 px-3 sm:px-4 rounded-lg hover:bg-white/10'
                       onClick={() => setIsOpen(false)}
                     >
-                      <span className='text-lg sm:text-xl md:text-2xl'>{item.icon}</span>
+                      <span className='text-lg sm:text-xl md:text-2xl'>
+                        {item.icon}
+                      </span>
                       <span className='font-medium'>{item.label}</span>
                     </a>
                   </div>

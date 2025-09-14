@@ -130,7 +130,7 @@ export default function Home() {
               <button
                 className='bg-white text-black px-8 sm:px-12 md:px-16 lg:px-24 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold'
                 onClick={() => {
-                  router.push("/create");
+                  router.push("/certification");
                 }}
               >
                 시작하기
@@ -165,10 +165,10 @@ export default function Home() {
                 spotlightSize={250}
               >
                 <div className='text-center h-full flex flex-col justify-center'>
-                  <h3 className='text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white'>
+                  <h3 className='text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white drop-shadow-lg'>
                     커스텀 디자인
                   </h3>
-                  <p className='text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed'>
+                  <p className='text-white text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-md font-medium'>
                     로고, 색상, 배경을 자유롭게 설정하여 크루만의 기록증을 만드세요
                   </p>
                 </div>
@@ -180,10 +180,10 @@ export default function Home() {
                 spotlightSize={250}
               >
                 <div className='text-center h-full flex flex-col justify-center'>
-                  <h3 className='text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white'>
+                  <h3 className='text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white drop-shadow-lg'>
                     대량 처리
                   </h3>
-                  <p className='text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed'>
+                  <p className='text-white text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-md font-medium'>
                     CSV 파일로 여러 참가자의 기록을 한번에 입력하고 관리하세요
                   </p>
                 </div>
@@ -195,10 +195,10 @@ export default function Home() {
                 spotlightSize={250}
               >
                 <div className='text-center h-full flex flex-col justify-center'>
-                  <h3 className='text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white'>
+                  <h3 className='text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white drop-shadow-lg'>
                     쉬운 공유
                   </h3>
-                  <p className='text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed'>
+                  <p className='text-white text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-md font-medium'>
                     카카오톡 공유와 이미지 다운로드로 간편하게 배포하세요
                   </p>
                 </div>
