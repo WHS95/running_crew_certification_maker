@@ -73,22 +73,22 @@ export default function StaggerdMenu() {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className='fixed top-6 right-6 z-50 w-12 h-12 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center hover:bg-black/30 transition-colors'
+        className='fixed top-4 right-4 sm:top-6 sm:right-6 z-50 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center hover:bg-black/30 transition-colors'
       >
-        <div className='relative w-6 h-6'>
+        <div className='relative w-5 h-5 sm:w-6 sm:h-6'>
           <span
-            className={`absolute top-1 left-0 w-6 h-0.5 bg-white transition-all duration-300 ${
-              isOpen ? "rotate-45 top-3" : ""
+            className={`absolute top-1 left-0 w-5 sm:w-6 h-0.5 bg-white transition-all duration-300 ${
+              isOpen ? "rotate-45 sm:top-3 top-2" : ""
             }`}
           />
           <span
-            className={`absolute top-3 left-0 w-6 h-0.5 bg-white transition-all duration-300 ${
+            className={`absolute sm:top-3 top-2 left-0 w-5 sm:w-6 h-0.5 bg-white transition-all duration-300 ${
               isOpen ? "opacity-0" : ""
             }`}
           />
           <span
-            className={`absolute top-5 left-0 w-6 h-0.5 bg-white transition-all duration-300 ${
-              isOpen ? "-rotate-45 top-3" : ""
+            className={`absolute sm:top-5 top-3 left-0 w-5 sm:w-6 h-0.5 bg-white transition-all duration-300 ${
+              isOpen ? "-rotate-45 sm:top-3 top-2" : ""
             }`}
           />
         </div>
@@ -104,22 +104,22 @@ export default function StaggerdMenu() {
 
       <nav
         ref={menuRef}
-        className={`fixed top-0 right-0 h-full w-80 z-40 transform transition-transform duration-500 ease-out ${
+        className={`fixed top-0 right-0 h-full w-64 sm:w-72 md:w-80 z-40 transform transition-transform duration-500 ease-out ${
           isOpen
             ? "translate-x-0 pointer-events-auto"
             : "translate-x-full pointer-events-none"
         }`}
       >
         <div className='h-full bg-black/80 backdrop-blur-lg border-l border-white/20'>
-          <div className='pt-24 px-8'>
-            <div className='mb-8'>
-              <h2 className='text-2xl font-bold text-white mb-2'>
+          <div className='pt-16 sm:pt-20 md:pt-24 px-4 sm:px-6 md:px-8'>
+            <div className='mb-6 sm:mb-8'>
+              <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-white mb-1 sm:mb-2'>
                 OUR RUNNING
               </h2>
-              <h2 className='text-2xl font-bold text-white'>MARATHON</h2>
+              <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-white'>MARATHON</h2>
             </div>
 
-            <ul className='space-y-4'>
+            <ul className='space-y-2 sm:space-y-3 md:space-y-4'>
               {menuItems.map((item, index) => (
                 <li key={item.href}>
                   <div
@@ -130,10 +130,10 @@ export default function StaggerdMenu() {
                   >
                     <a
                       href={item.href}
-                      className='flex items-center space-x-4 text-white hover:text-gray-300 transition-colors text-lg py-3 px-4 rounded-lg hover:bg-white/10'
+                      className='flex items-center space-x-3 sm:space-x-4 text-white hover:text-gray-300 transition-colors text-base sm:text-lg py-2 sm:py-3 px-3 sm:px-4 rounded-lg hover:bg-white/10'
                       onClick={() => setIsOpen(false)}
                     >
-                      <span className='text-2xl'>{item.icon}</span>
+                      <span className='text-lg sm:text-xl md:text-2xl'>{item.icon}</span>
                       <span className='font-medium'>{item.label}</span>
                     </a>
                   </div>
