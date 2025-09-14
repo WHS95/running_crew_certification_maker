@@ -28,7 +28,7 @@ export default function StaggerdMenu() {
     const overlay = overlayRef.current;
 
     if (isOpen) {
-      gsap.set(items, { x: -100, opacity: 0 });
+      gsap.set(items, { x: 100, opacity: 0 });
       gsap.set(overlay, { opacity: 0 });
 
       const tl = gsap.timeline();
@@ -52,7 +52,7 @@ export default function StaggerdMenu() {
       const tl = gsap.timeline();
 
       tl.to(items, {
-        x: -100,
+        x: 100,
         opacity: 0,
         duration: 0.4,
         stagger: 0.05,
@@ -73,7 +73,7 @@ export default function StaggerdMenu() {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className='fixed top-6 left-6 z-50 w-12 h-12 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center hover:bg-black/30 transition-colors'
+        className='fixed top-6 right-6 z-50 w-12 h-12 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center hover:bg-black/30 transition-colors'
       >
         <div className='relative w-6 h-6'>
           <span
@@ -104,13 +104,13 @@ export default function StaggerdMenu() {
 
       <nav
         ref={menuRef}
-        className={`fixed top-0 left-0 h-full w-80 z-40 transform transition-transform duration-500 ease-out ${
+        className={`fixed top-0 right-0 h-full w-80 z-40 transform transition-transform duration-500 ease-out ${
           isOpen
             ? "translate-x-0 pointer-events-auto"
-            : "-translate-x-full pointer-events-none"
+            : "translate-x-full pointer-events-none"
         }`}
       >
-        <div className='h-full bg-black/80 backdrop-blur-lg border-r border-white/20'>
+        <div className='h-full bg-black/80 backdrop-blur-lg border-l border-white/20'>
           <div className='pt-24 px-8'>
             <div className='mb-8'>
               <h2 className='text-2xl font-bold text-white mb-2'>
