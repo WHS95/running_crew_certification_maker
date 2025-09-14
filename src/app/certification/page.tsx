@@ -7,8 +7,11 @@ import Stepper, { Step } from "@/components/Stepper";
 import LogoSettings from "@/components/certification/LogoSettings";
 import BackgroundSettings from "@/components/certification/BackgroundSettings";
 import CertificatePreview from "@/components/certification/CertificatePreview";
-import ParticipantForm, { ParticipantData } from "@/components/certification/ParticipantForm";
+import ParticipantForm, {
+  ParticipantData,
+} from "@/components/certification/ParticipantForm";
 import CSVUpload from "@/components/certification/CSVUpload";
+import CertificateGallery from "@/components/certification/CertificateGallery";
 
 export default function CertificationPage() {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -174,21 +177,15 @@ export default function CertificationPage() {
   };
 
   const handleAddParticipant = (participant: ParticipantData) => {
-    setParticipants(prev => [...prev, participant]);
-  };
-
-  const handleUpdateParticipant = (id: string, updates: Partial<ParticipantData>) => {
-    setParticipants(prev => 
-      prev.map(p => p.id === id ? { ...p, ...updates } : p)
-    );
+    setParticipants((prev) => [...prev, participant]);
   };
 
   const handleRemoveParticipant = (id: string) => {
-    setParticipants(prev => prev.filter(p => p.id !== id));
+    setParticipants((prev) => prev.filter((p) => p.id !== id));
   };
 
   const handleCSVUpload = (csvParticipants: ParticipantData[]) => {
-    setParticipants(prev => [...prev, ...csvParticipants]);
+    setParticipants((prev) => [...prev, ...csvParticipants]);
   };
 
   return (
@@ -196,14 +193,14 @@ export default function CertificationPage() {
       <StaggerdMenu />
 
       <div className='container mx-auto px-4 pt-20'>
-        <div className='text-center mb-12'>
+        <div className='text-center mb-12 text-2xl'>
           <GradientText
             colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
             animationSpeed={3}
             showBorder={false}
             className='text-4xl md:text-6xl font-bold mb-4'
           >
-            Marathon Certificate Creator
+            RUN HOUSE CLUB
           </GradientText>
           <p className='text-gray-400 text-lg'>
             크루만의 특별한 마라톤 기록증을 만들어보세요
@@ -277,22 +274,20 @@ export default function CertificationPage() {
                     참가자 기록 입력
                   </h2>
 
-                  {/* 탭 형태로 개별 입력과 CSV 업로드 구분 */}
-                  <div className='grid grid-cols-1 xl:grid-cols-2 gap-8'>
+                  {/* 참가자 입력 */}
+                  <div className='space-y-8'>
                     {/* 개별 입력 */}
-                    <div>
-                      <ParticipantForm
-                        onAdd={handleAddParticipant}
-                        onUpdate={handleUpdateParticipant}
-                        onRemove={handleRemoveParticipant}
-                        participants={participants}
-                      />
-                    </div>
+                    <ParticipantForm
+                      onAdd={handleAddParticipant}
+                      onRemove={handleRemoveParticipant}
+                      participants={participants}
+                    />
+
+                    {/* 구분선 */}
+                    <div className='border-t border-white/30'></div>
 
                     {/* CSV 업로드 */}
-                    <div>
-                      <CSVUpload onUpload={handleCSVUpload} />
-                    </div>
+                    <CSVUpload onUpload={handleCSVUpload} />
                   </div>
 
                   {/* 참가자 수 요약 */}
@@ -301,7 +296,8 @@ export default function CertificationPage() {
                       <div className='flex items-center justify-between'>
                         <div>
                           <h4 className='text-green-300 font-medium'>
-                            📊 총 {participants.length}명의 참가자가 등록되었습니다.
+                            📊 총 {participants.length}명의 참가자가
+                            등록되었습니다.
                           </h4>
                           <p className='text-sm text-green-200 mt-1'>
                             다음 단계에서 기록증을 생성할 수 있습니다.
@@ -316,6 +312,29 @@ export default function CertificationPage() {
                       </div>
                     </div>
                   )}
+                </div>
+              </Step>
+
+              <Step>
+                <div className='space-y-6'>
+                  <h2 className='text-2xl font-bold mb-6 text-center text-white'>
+                    기록증 미리보기 및 다운로드
+                  </h2>
+
+                  <CertificateGallery
+                    participants={participants}
+                    templateData={{
+                      logoPreview,
+                      logoText,
+                      logoFont,
+                      logoFontSize,
+                      logoPosition,
+                      logoSize,
+                      backgroundColor,
+                      backgroundPreview,
+                      description,
+                    }}
+                  />
                 </div>
               </Step>
             </Stepper>

@@ -70,7 +70,7 @@ export default function GradientText({
         ...(showBorder && {
           border: "2px solid",
           borderImage: `linear-gradient(90deg, ${colors.join(", ")}) 1`,
-          padding: "0.5rem 1rem",
+          padding: "0.5rem 0.5rem",
           borderRadius: "0.5rem",
         }),
       }}

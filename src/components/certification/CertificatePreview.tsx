@@ -96,7 +96,7 @@ export default function CertificatePreview({
                   />
                 ) : (
                   <div
-                    className='w-full h-full flex items-center justify-center text-white font-bold bg-white/10 rounded border border-white/30 relative cursor-move'
+                    className='w-full h-full flex items-center justify-center text-white font-bold bg-white/5 rounded border border-white/20 relative cursor-move'
                     style={{
                       fontFamily: logoFont,
                       lineHeight: "1.2",
@@ -116,6 +116,8 @@ export default function CertificatePreview({
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+                        letterSpacing: "1px",
                       }}
                     >
                       {logoText}

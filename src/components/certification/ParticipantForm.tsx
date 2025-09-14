@@ -96,7 +96,8 @@ export default function ParticipantForm({
             <label className='block text-sm font-medium mb-2 text-white'>
               거리
             </label>
-            <select
+            <input
+              type='text'
               value={newParticipant.distance}
               onChange={(e) =>
                 setNewParticipant({
@@ -104,13 +105,9 @@ export default function ParticipantForm({
                   distance: e.target.value,
                 })
               }
-              className='w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-500'
-            >
-              <option value='5K'>5K</option>
-              <option value='10K'>10K</option>
-              <option value='21K'>21K (하프)</option>
-              <option value='42K'>42K (풀코스)</option>
-            </select>
+              className='w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
+              placeholder='예: 5K, 10K, 21K, 42K, 100m 등'
+            />
           </div>
 
           <div>
