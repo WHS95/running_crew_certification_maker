@@ -225,7 +225,6 @@ export default function CertificationPage() {
 
                   {/* Logo Setup */}
                   <LogoSettings
-                    logoFile={null}
                     logoPreview={logoPreview}
                     logoText={logoText}
                     logoFont={logoFont}

@@ -120,7 +120,7 @@ export default function DecryptedText({
         clearInterval(intervalRef.current)
       }
     }
-  }, [animateOn])
+  }, [animateOn, animateText])
 
   const handleMouseEnter = () => {
     if (animateOn === 'hover') {
