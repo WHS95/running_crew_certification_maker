@@ -136,7 +136,7 @@ export default function CertificatePreview({
 
               <div>
                 <div className='text-sm font-medium mb-1'>RECORD</div>
-                <div className='text-2xl font-bold'>10K 00:54:36</div>
+                <div className='text-2xl font-bold text-center'>10K 00:54:36</div>
               </div>
             </div>
 

@@ -207,15 +207,15 @@ export default function CertificationPage() {
           </p>
         </div>
 
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto'>
           {/* Left: Stepper */}
-          <div>
+          <div className='w-full'>
             <Stepper
               initialStep={1}
               nextButtonText='다음 단계'
               backButtonText='이전'
-              stepCircleContainerClassName='w-full'
-              className='h-full'
+              stepCircleContainerClassName='w-full max-w-none'
+              className='w-full'
             >
               <Step>
                 <div className='space-y-6'>
@@ -341,19 +341,21 @@ export default function CertificationPage() {
           </div>
 
           {/* Right: Live Preview */}
-          <CertificatePreview
-            backgroundColor={backgroundColor}
-            backgroundPreview={backgroundPreview}
-            logoPreview={logoPreview}
-            logoText={logoText}
-            logoFont={logoFont}
-            logoFontSize={logoFontSize}
-            logoPosition={logoPosition}
-            logoSize={logoSize}
-            description={description}
-            onLogoPositionChange={setLogoPosition}
-            onLogoSizeChange={setLogoSize}
-          />
+          <div className='w-full'>
+            <CertificatePreview
+              backgroundColor={backgroundColor}
+              backgroundPreview={backgroundPreview}
+              logoPreview={logoPreview}
+              logoText={logoText}
+              logoFont={logoFont}
+              logoFontSize={logoFontSize}
+              logoPosition={logoPosition}
+              logoSize={logoSize}
+              description={description}
+              onLogoPositionChange={setLogoPosition}
+              onLogoSizeChange={setLogoSize}
+            />
+          </div>
         </div>
       </div>
     </div>

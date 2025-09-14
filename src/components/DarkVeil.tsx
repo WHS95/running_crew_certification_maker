@@ -31,7 +31,7 @@ export default function DarkVeil() {
     }
 
     // Animate particles
-    particles.forEach((particle, index) => {
+    particles.forEach((particle) => {
       gsap.to(particle, {
         y: `+=${Math.random() * 200 + 100}`,
         x: `+=${Math.random() * 100 - 50}`,

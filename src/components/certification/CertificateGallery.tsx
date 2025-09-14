@@ -204,7 +204,7 @@ export default function CertificateGallery({ participants, templateData }: Certi
       try {
         await navigator.clipboard.writeText(shareText)
         alert('공유 링크가 클립보드에 복사되었습니다!')
-      } catch (error) {
+      } catch {
         alert('공유 링크를 복사할 수 없습니다.')
       }
     }

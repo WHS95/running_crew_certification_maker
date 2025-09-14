@@ -1,10 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import FileUpload from '@/components/FileUpload'
 
 interface LogoSettingsProps {
-  logoFile: File | null
   logoPreview: string | null
   logoText: string
   logoFont: string
@@ -17,7 +15,6 @@ interface LogoSettingsProps {
 }
 
 export default function LogoSettings({
-  logoFile,
   logoPreview,
   logoText,
   logoFont,

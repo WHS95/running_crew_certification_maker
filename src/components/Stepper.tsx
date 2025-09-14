@@ -22,7 +22,7 @@ interface StepperProps {
     currentStep: number
     onStepClick: (step: number) => void
   }) => React.ReactNode
-  [key: string]: any
+  className?: string
 }
 
 export default function Stepper({
@@ -40,7 +40,7 @@ export default function Stepper({
   nextButtonText = 'Continue',
   disableStepIndicators = false,
   renderStepIndicator,
-  ...rest
+  className
 }: StepperProps) {
   const [currentStep, setCurrentStep] = useState(initialStep)
   const [direction, setDirection] = useState(0)
@@ -76,11 +76,10 @@ export default function Stepper({
 
   return (
     <div
-      className="flex min-h-full flex-1 flex-col items-center justify-center p-4 sm:aspect-[4/3] md:aspect-[2/1]"
-      {...rest}
+      className={`flex min-h-full flex-1 flex-col ${className || ""}`}
     >
       <div
-        className={`mx-auto w-full max-w-md rounded-lg shadow-xl bg-white/5 backdrop-blur-sm border border-white/20 ${stepCircleContainerClassName}`}
+        className={`w-full rounded-lg shadow-xl bg-white/5 backdrop-blur-sm border border-white/20 ${stepCircleContainerClassName}`}
       >
         <div className={`${stepContainerClassName} flex w-full items-center p-8`}>
           {stepsArray.map((_, index) => {

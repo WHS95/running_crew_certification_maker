@@ -1,5 +1,6 @@
 import html2canvas from 'html2canvas';
 import { ParticipantData } from '@/components/certification/ParticipantForm';
+import { formatDistance } from './formatDistance';
 
 interface TemplateData {
   logoPreview: string | null;
@@ -113,9 +114,10 @@ export const generateCertificateElement = (
   recordLabel.style.marginBottom = '8px';
 
   const recordValue = document.createElement('div');
-  recordValue.textContent = `${participant.distance} ${participant.time}`;
+  recordValue.textContent = `${formatDistance(participant.distance)} ${participant.time}`;
   recordValue.style.fontSize = '32px';
   recordValue.style.fontWeight = 'bold';
+  recordValue.style.textAlign = 'center';
 
   recordSection.appendChild(recordLabel);
   recordSection.appendChild(recordValue);

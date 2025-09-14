@@ -24,9 +24,7 @@ export default function TextType({
 }: TextTypeProps) {
   const textRef = useRef<HTMLSpanElement>(null)
   const cursorRef = useRef<HTMLSpanElement>(null)
-  const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [currentText, setCurrentText] = useState("")
-  const [isTyping, setIsTyping] = useState(true)
 
   useEffect(() => {
     if (!textRef.current) return
@@ -47,9 +45,7 @@ export default function TextType({
           timeoutId = setTimeout(typeText, typingSpeed)
         } else {
           // Pause before deleting
-          setIsTyping(false)
           timeoutId = setTimeout(() => {
-            setIsTyping(true)
             isDeleting = true
             typeText()
           }, pauseDuration)
@@ -64,7 +60,6 @@ export default function TextType({
           // Move to next text
           isDeleting = false
           textArrayIndex = (textArrayIndex + 1) % text.length
-          setCurrentTextIndex(textArrayIndex)
           
           if (textArrayIndex === 0 && onComplete) {
             onComplete()

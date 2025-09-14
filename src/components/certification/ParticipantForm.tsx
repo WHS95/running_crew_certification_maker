@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formatDistance } from "@/utils/formatDistance";
 
 export interface ParticipantData {
   id: string;
@@ -124,7 +125,7 @@ export default function ParticipantForm({
                 })
               }
               className='w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
-              placeholder='예: 005436 → 00:54:36'
+              placeholder='예: 00:54:36'
               maxLength={8}
             />
           </div>
@@ -161,7 +162,8 @@ export default function ParticipantForm({
           <div className='flex items-end'>
             <button
               onClick={handleAdd}
-              className='w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium'
+              className='w-full px-4 py-2 text-white rounded-lg hover:opacity-80 transition-colors font-medium'
+              style={{ backgroundColor: '#669ff2' }}
             >
               참가자 추가
             </button>
@@ -190,7 +192,7 @@ export default function ParticipantForm({
                   </div>
                   <div>
                     <span className='text-gray-400'>거리:</span>
-                    <div className='text-white'>{participant.distance}</div>
+                    <div className='text-white'>{formatDistance(participant.distance)}</div>
                   </div>
                   <div>
                     <span className='text-gray-400'>기록:</span>

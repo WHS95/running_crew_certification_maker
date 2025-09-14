@@ -118,38 +118,34 @@ export default function CSVUpload({ onUpload }: CSVUploadProps) {
 
   return (
     <div className='space-y-4'>
+      <h4 className='text-md font-medium text-white'>대량등록 CSV</h4>
+      <div className='bg-white/5 p-4 rounded-lg border border-white/20 flex justify-between'>
+        {/* CSV 템플릿 다운로드 */}
+        <div className='flex items-center space-x-3'>
+          <button
+            onClick={downloadTemplate}
+            className='px-4 py-2 text-white rounded-lg hover:opacity-80 transition-colors text-sm font-medium'
+            style={{ backgroundColor: '#669ff2' }}
+          >
+            CSV 템플릿 다운로드
+          </button>
+        </div>
 
-      <div className='bg-white/5 p-4 rounded-lg border border-white/20'>
-        <div className='space-y-4'>
-          {/* CSV 템플릿 다운로드 */}
-          <div>
-            <button
-              onClick={downloadTemplate}
-              className='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium'
-            >
-              CSV 템플릿 다운로드
-            </button>
-          </div>
-
-          {/* 구분선 */}
-          <div className='border-t border-white/20 pt-4'>
-            {/* CSV 파일 업로드 */}
-            <div className='flex items-center space-x-3'>
-              <input
-                ref={fileInputRef}
-                type='file'
-                accept='.csv'
-                onChange={handleFileUpload}
-                className='hidden'
-              />
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className='px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium'
-              >
-                CSV 파일 선택
-              </button>
-            </div>
-          </div>
+        <div className='flex items-center space-x-3'>
+          <input
+            ref={fileInputRef}
+            type='file'
+            accept='.csv'
+            onChange={handleFileUpload}
+            className='hidden'
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className='px-4 py-2 text-white rounded-lg hover:opacity-80 transition-colors text-sm font-medium'
+            style={{ backgroundColor: '#669ff2' }}
+          >
+            CSV 파일 업로드
+          </button>
         </div>
       </div>
     </div>
