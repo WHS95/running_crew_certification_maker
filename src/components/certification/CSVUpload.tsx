@@ -118,14 +118,13 @@ export default function CSVUpload({ onUpload }: CSVUploadProps) {
 
   return (
     <div className='space-y-4'>
-      <h4 className='text-md font-medium text-white'>대량등록 CSV</h4>
-      <div className='bg-white/5 p-4 rounded-lg border border-white/20 flex justify-between'>
+      <h4 className='text-xs sm:text-sm font-medium text-white'>대량등록 CSV</h4>
+      <div className='bg-white/5 p-3 sm:p-4 rounded-lg border border-white/20 flex flex-col sm:flex-row justify-between gap-3 sm:gap-0'>
         {/* CSV 템플릿 다운로드 */}
         <div className='flex items-center space-x-3'>
           <button
             onClick={downloadTemplate}
-            className='px-4 py-2 text-white rounded-lg hover:opacity-80 transition-colors text-sm font-medium'
-            style={{ backgroundColor: '#669ff2' }}
+            className='px-3 sm:px-4 py-2 bg-basic-blue text-white rounded-lg hover:opacity-80 transition-colors text-xs sm:text-sm font-medium w-full sm:w-auto'
           >
             CSV 템플릿 다운로드
           </button>
@@ -141,8 +140,7 @@ export default function CSVUpload({ onUpload }: CSVUploadProps) {
           />
           <button
             onClick={() => fileInputRef.current?.click()}
-            className='px-4 py-2 text-white rounded-lg hover:opacity-80 transition-colors text-sm font-medium'
-            style={{ backgroundColor: '#669ff2' }}
+            className='px-3 sm:px-4 py-2 bg-basic-blue text-white rounded-lg hover:opacity-80 transition-colors text-xs sm:text-sm font-medium w-full sm:w-auto'
           >
             CSV 파일 업로드
           </button>

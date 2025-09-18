@@ -221,8 +221,8 @@ export default function CertificateGallery({ participants, templateData }: Certi
   return (
     <div className='space-y-6'>
       {/* 컨트롤 바 */}
-      <div className='flex items-center justify-between bg-white/5 p-4 rounded-lg border border-white/20'>
-        <div className='flex items-center space-x-4'>
+      <div className='flex flex-col sm:flex-row sm:items-center justify-between bg-white/5 p-3 sm:p-4 rounded-lg border border-white/20 gap-3 sm:gap-0'>
+        <div className='flex items-center space-x-3 sm:space-x-4'>
           <label className='flex items-center space-x-2 cursor-pointer'>
             <input
               type='checkbox'
@@ -236,11 +236,11 @@ export default function CertificateGallery({ participants, templateData }: Certi
           </label>
         </div>
 
-        <div className='flex items-center space-x-3'>
+        <div className='flex flex-wrap items-center gap-2 sm:gap-3'>
           <button
             onClick={() => handleDownload('selected')}
             disabled={selectedIds.size === 0}
-            className='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+            className='px-2 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm'
           >
             선택 다운로드 ({selectedIds.size})
           </button>

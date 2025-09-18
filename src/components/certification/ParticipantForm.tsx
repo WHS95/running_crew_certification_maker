@@ -74,10 +74,12 @@ export default function ParticipantForm({
   };
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-4 sm:space-y-6'>
+      <h3 className='text-sm sm:text-base font-medium text-white mb-2 sm:mb-3'>참가자 개별 입력</h3>
+      
       {/* 새 참가자 입력 폼 */}
-      <div className='bg-white/5 p-4 rounded-lg border border-white/20'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+      <div className='bg-white/5 p-3 sm:p-4 rounded-lg border border-white/20'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'>
           <div>
             <label className='block text-sm font-medium mb-2 text-white'>
               참가자명 *
@@ -162,8 +164,7 @@ export default function ParticipantForm({
           <div className='flex items-end'>
             <button
               onClick={handleAdd}
-              className='w-full px-4 py-2 text-white rounded-lg hover:opacity-80 transition-colors font-medium'
-              style={{ backgroundColor: '#669ff2' }}
+              className='w-full px-4 py-2 bg-basic-blue text-white rounded-lg hover:opacity-80 transition-colors font-medium'
             >
               참가자 추가
             </button>
@@ -174,16 +175,16 @@ export default function ParticipantForm({
       {/* 참가자 목록 */}
       {participants.length > 0 && (
         <div className='space-y-3'>
-          <h4 className='text-md font-medium text-white'>
+          <h4 className='text-xs sm:text-sm font-medium text-white'>
             추가된 참가자 ({participants.length}명)
           </h4>
-          <div className='space-y-2 max-h-64 overflow-y-auto'>
+          <div className='space-y-2 max-h-48 sm:max-h-64 overflow-y-auto'>
             {participants.map((participant) => (
               <div
                 key={participant.id}
-                className='flex items-center justify-between bg-white/5 p-3 rounded-lg border border-white/20'
+                className='flex flex-col sm:flex-row sm:items-center justify-between bg-white/5 p-3 rounded-lg border border-white/20 gap-3'
               >
-                <div className='flex-1 grid grid-cols-4 gap-4 text-sm'>
+                <div className='flex-1 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-sm'>
                   <div>
                     <span className='text-gray-400'>이름:</span>
                     <div className='text-white font-medium'>

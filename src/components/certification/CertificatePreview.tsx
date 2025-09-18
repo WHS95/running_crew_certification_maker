@@ -54,21 +54,24 @@ export default function CertificatePreview({
   }, []);
 
   return (
-    <div className='lg:sticky lg:top-24 lg:self-start'>
-      <div className='bg-white/5 backdrop-blur-sm rounded-lg border border-white/20 p-6'>
+    <div className='lg:sticky lg:top-24 lg:self-start order-first lg:order-last mb-6 lg:mb-0'>
+      <div className='bg-white/5 backdrop-blur-sm rounded-lg border border-white/20 p-4 sm:p-6'>
+        <h3 className='text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white text-center'>
+          실시간 미리보기
+        </h3>
+
         {/* A4 비율 Certificate Preview */}
         <div
           ref={certificateRef}
-          className='w-full border border-white/20 rounded-lg p-6 flex flex-col justify-between relative overflow-hidden'
+          className='w-full border border-white/20 rounded-lg p-3 sm:p-6 flex flex-col justify-between relative overflow-hidden'
           style={{
-            aspectRatio: "210/297", // A4 비율
+            aspectRatio: "210/297", // A4 비율 (0.707)
             backgroundColor: backgroundColor,
             backgroundImage: backgroundPreview
               ? `url(${backgroundPreview})`
               : "none",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            minHeight: "400px",
           }}
         >
           {backgroundPreview && (
@@ -128,15 +131,23 @@ export default function CertificatePreview({
             </div>
 
             {/* Main Content */}
-            <div className='space-y-4'>
+            <div className='space-y-3 sm:space-y-4'>
               <div>
-                <div className='text-sm font-medium mb-1'>RUNNER</div>
-                <div className='text-3xl font-bold korean-text'>참가자명</div>
+                <div className='text-xs sm:text-sm font-medium mb-1'>
+                  RUNNER
+                </div>
+                <div className='text-xl sm:text-3xl font-bold korean-text'>
+                  참가자명
+                </div>
               </div>
 
               <div>
-                <div className='text-sm font-medium mb-1'>RECORD</div>
-                <div className='text-2xl font-bold text-center'>10K 00:54:36</div>
+                <div className='text-xs sm:text-sm font-medium mb-1'>
+                  RECORD
+                </div>
+                <div className='text-lg sm:text-2xl font-bold text-center'>
+                  10K 00:54:36
+                </div>
               </div>
             </div>
 
@@ -154,15 +165,16 @@ export default function CertificatePreview({
               </div>
               <div className='text-center mt-4'>
                 <p className='text-xs opacity-80'>
-                  {description || "크루 소개글이 여기에 표시됩니다"}
+                  {description || "설명이 여기에 표시됩니다"}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <p className='text-sm text-gray-400 mt-4 text-center'>
-          A4 비율로 미리보기 (New Balance 스타일)
+        <p className='text-xs text-gray-400 mt-3 text-center'>
+          A4 비율로 미리보기
+          <br className='sm:hidden' /> (New Balance 스타일)
         </p>
       </div>
     </div>

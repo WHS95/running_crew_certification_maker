@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import FileUpload from '@/components/FileUpload'
+import FileUpload from "@/components/FileUpload";
 
 interface BackgroundSettingsProps {
-  backgroundColor: string
-  backgroundPreview: string | null
-  logoPreview: string | null
-  onBackgroundColorChange: (color: string) => void
-  onBackgroundUpload: (file: File) => void
-  onBackgroundRemove: () => void
-  onRandomColor: () => void
-  onExtractColor: () => void
+  backgroundColor: string;
+  backgroundPreview: string | null;
+  logoPreview: string | null;
+  onBackgroundColorChange: (color: string) => void;
+  onBackgroundUpload: (file: File) => void;
+  onBackgroundRemove: () => void;
+  onRandomColor: () => void;
+  onExtractColor: () => void;
 }
 
 export default function BackgroundSettings({
@@ -21,38 +21,33 @@ export default function BackgroundSettings({
   onBackgroundUpload,
   onBackgroundRemove,
   onRandomColor,
-  onExtractColor
+  onExtractColor,
 }: BackgroundSettingsProps) {
   return (
     <div>
-      <label className='block text-sm font-medium mb-2 text-white'>
-        배경 설정
-      </label>
+      <label className='block text-sm font-bold mb-2 text-white'>배경</label>
       <div className='space-y-4'>
         {/* Color Picker */}
         <div>
-          <label className='block text-xs font-medium mb-2 text-gray-400'>
-            배경 색상
-          </label>
           <div className='flex items-center space-x-3 flex-wrap gap-2'>
             <input
               type='color'
               value={backgroundColor}
               onChange={(e) => onBackgroundColorChange(e.target.value)}
-              className='w-12 h-12 rounded-lg border border-white/20 cursor-pointer'
+              className='w-8 h-8 sm:w-12 sm:h-12 rounded-lg border border-white/20 cursor-pointer'
             />
             <button
               onClick={onRandomColor}
-              className='px-3 py-2 bg-purple-600 text-white rounded-lg text-sm hover:bg-purple-700 transition-colors'
+              className='px-3 py-2 bg-basic-blue text-white rounded-lg text-xs sm:text-sm hover:opacity-80 transition-colors'
             >
               랜덤
             </button>
             <button
               onClick={onExtractColor}
               disabled={!logoPreview}
-              className='px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
+              className='px-3 py-2 bg-basic-blue text-white rounded-lg text-xs sm:text-sm hover:opacity-80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
             >
-              로고추출
+              로고색상추출
             </button>
           </div>
         </div>
@@ -91,5 +86,5 @@ export default function BackgroundSettings({
         </div>
       </div>
     </div>
-  )
+  );
 }

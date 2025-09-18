@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import FileUpload from '@/components/FileUpload'
+import FileUpload from "@/components/FileUpload";
 
 interface LogoSettingsProps {
-  logoPreview: string | null
-  logoText: string
-  logoFont: string
-  logoFontSize: number
-  onLogoUpload: (file: File) => void
-  onLogoRemove: () => void
-  onLogoTextChange: (text: string) => void
-  onLogoFontChange: (font: string) => void
-  onLogoFontSizeChange: (size: number) => void
+  logoPreview: string | null;
+  logoText: string;
+  logoFont: string;
+  logoFontSize: number;
+  onLogoUpload: (file: File) => void;
+  onLogoRemove: () => void;
+  onLogoTextChange: (text: string) => void;
+  onLogoFontChange: (font: string) => void;
+  onLogoFontSizeChange: (size: number) => void;
 }
 
 export default function LogoSettings({
@@ -23,14 +23,14 @@ export default function LogoSettings({
   onLogoRemove,
   onLogoTextChange,
   onLogoFontChange,
-  onLogoFontSizeChange
+  onLogoFontSizeChange,
 }: LogoSettingsProps) {
   return (
     <div>
-      <label className='block text-sm font-medium mb-2 text-white'>
+      <label className='block text-sm font-bold mb-2 text-white'>
         크루 로고
       </label>
-      
+
       {/* Logo Choice: Image or Text */}
       <div className='space-y-4'>
         {logoPreview ? (
@@ -51,23 +51,20 @@ export default function LogoSettings({
           <>
             {/* Text Logo Input */}
             <div>
-              <label className='block text-xs font-medium mb-2 text-gray-400'>
-                크루명 (텍스트 로고)
-              </label>
               <input
                 type='text'
                 value={logoText}
                 onChange={(e) => onLogoTextChange(e.target.value)}
-                className='w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
+                className='w-full px-3 py-2 text-xs sm:text-sm bg-black/50 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
                 placeholder='크루명을 입력하세요'
-              />
+              ></input>
             </div>
-            
+
             {/* Font Selection */}
             <div className='grid grid-cols-2 gap-3'>
               <div>
                 <label className='block text-xs font-medium mb-2 text-gray-400'>
-                  글꼴 선택
+                  글꼴
                 </label>
                 <select
                   value={logoFont}
@@ -86,26 +83,27 @@ export default function LogoSettings({
               </div>
               <div>
                 <label className='block text-xs font-medium mb-2 text-gray-400'>
-                  글자 크기
+                  크기
                 </label>
-                <div className='flex items-center space-x-2'>
+                <div className='flex items-center justify-center h-10'>
                   <input
                     type='range'
                     min='12'
-                    max='32'
+                    max='100'
                     value={logoFontSize}
-                    onChange={(e) => onLogoFontSizeChange(Number(e.target.value))}
-                    className='flex-1'
+                    onChange={(e) =>
+                      onLogoFontSizeChange(Number(e.target.value))
+                    }
+                    className='w-full'
                   />
-                  <span className='text-white text-sm w-8'>{logoFontSize}px</span>
                 </div>
               </div>
             </div>
-            
+
             <div className='text-center'>
               <span className='text-gray-500 text-sm'>또는</span>
             </div>
-            
+
             <FileUpload
               onFileSelect={onLogoUpload}
               accept='image/*'
@@ -119,5 +117,5 @@ export default function LogoSettings({
         )}
       </div>
     </div>
-  )
+  );
 }

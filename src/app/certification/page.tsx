@@ -192,22 +192,23 @@ export default function CertificationPage() {
     <div className='min-h-screen bg-black text-white relative'>
       <StaggerdMenu />
 
-      <div className='container mx-auto px-4 pt-20'>
-        <div className='text-center mb-12 text-2xl'>
+      <div className='container mx-auto px-4 sm:px-6 pt-8 sm:pt-20'>
+        <div className='text-center mb-6 sm:mb-8'>
           <GradientText
             colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
             animationSpeed={3}
             showBorder={false}
-            className='text-4xl md:text-6xl font-bold mb-4'
+            className='text-xl sm:text-2xl md:text-4xl font-bold mb-2'
           >
             RUN HOUSE CLUB
           </GradientText>
-          <p className='text-gray-400 text-lg'>
-            크루만의 특별한 마라톤 기록증을 만들어보세요
+          <p className='text-gray-400 text-xs sm:text-sm px-4'>
+            크루만의 특별한 마라톤 기록증을
+            <br className='sm:hidden' /> 만들어보세요
           </p>
         </div>
 
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto'>
+        <div className='flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-12 max-w-7xl mx-auto'>
           {/* Left: Stepper */}
           <div className='w-full'>
             <Stepper
@@ -218,11 +219,7 @@ export default function CertificationPage() {
               className='w-full'
             >
               <Step>
-                <div className='space-y-6'>
-                  <h2 className='text-2xl font-bold mb-6 text-center text-white'>
-                    템플릿 설정
-                  </h2>
-
+                <div className='space-y-3 sm:space-y-4'>
                   {/* Logo Setup */}
                   <LogoSettings
                     logoPreview={logoPreview}
@@ -238,15 +235,14 @@ export default function CertificationPage() {
 
                   {/* Description */}
                   <div>
-                    <label className='block text-sm font-medium mb-2 text-white'>
-                      소개글
+                    <label className='block text-sm font-bold mb-2 text-white'>
+                      설명
                     </label>
                     <textarea
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       className='w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
-                      rows={3}
-                      placeholder='크루 소개글을 입력하세요...'
+                      rows={2}
                     />
                     <p className='text-xs text-gray-400 mt-1'>
                       {description.length}/200자
@@ -268,8 +264,8 @@ export default function CertificationPage() {
               </Step>
 
               <Step>
-                <div className='space-y-8'>
-                  <h2 className='text-2xl font-bold mb-6 text-center text-white'>
+                <div className='space-y-4 sm:space-y-6'>
+                  <h2 className='text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-center text-white'>
                     참가자 기록 입력
                   </h2>
 
@@ -315,9 +311,9 @@ export default function CertificationPage() {
               </Step>
 
               <Step>
-                <div className='space-y-6'>
-                  <h2 className='text-2xl font-bold mb-6 text-center text-white'>
-                    기록증 미리보기 및 다운로드
+                <div className='space-y-3 sm:space-y-4'>
+                  <h2 className='text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-center text-white'>
+                    기록증 미리보기 및<br className='sm:hidden' /> 다운로드
                   </h2>
 
                   <CertificateGallery
