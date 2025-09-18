@@ -150,7 +150,13 @@ export default function Home() {
 
               <div className='text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
                 <GradientText
-                  colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+                  colors={[
+                    "#40ffaa",
+                    "#4079ff",
+                    "#40ffaa",
+                    "#4079ff",
+                    "#40ffaa",
+                  ]}
                   animationSpeed={3}
                   showBorder={false}
                 >
@@ -169,13 +175,14 @@ export default function Home() {
                     커스텀 디자인
                   </h3>
                   <p className='text-white text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-md font-medium'>
-                    로고, 색상, 배경을 자유롭게 설정하여 크루만의 기록증을 만드세요
+                    로고, 색상, 배경을 자유롭게 설정하여 크루만의 기록증을
+                    만드세요
                   </p>
                 </div>
               </SpotlightCard>
 
               <SpotlightCard
-                className='p-4 sm:p-6 md:p-8 h-48 sm:h-56 md:h-64'
+                className='p-4 sm:p-6 md:p-8 h-48 sm:h-48 md:h-48'
                 spotlightColor='rgba(64, 121, 255, 0.15)'
                 spotlightSize={250}
               >
