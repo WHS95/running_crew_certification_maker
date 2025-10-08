@@ -193,10 +193,10 @@ export default function CertificationPage() {
   };
 
   return (
-    <div className='h-screen bg-black text-white relative overflow-hidden'>
+    <div className='h-screen bg-black text-white relative overflow-hidden no-scrollbar'>
       <StaggerdMenu />
 
-      <div className='container mx-auto px-4 sm:px-6 pt-8 sm:pt-20 h-full overflow-y-auto'>
+      <div className='container mx-auto px-4 sm:px-6 pt-8 sm:pt-20 h-full overflow-y-auto no-scrollbar'>
         <div className='text-center mb-6 sm:mb-8'>
           <GradientText
             colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}

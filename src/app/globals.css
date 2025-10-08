@@ -39,6 +39,17 @@ body::-webkit-scrollbar {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Hide scrollbar utility (while keeping scroll functional) */
+  .no-scrollbar,
+  .no-scrollbar * {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar,
+  .no-scrollbar *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
 }
 
 /* Korean text styling */
