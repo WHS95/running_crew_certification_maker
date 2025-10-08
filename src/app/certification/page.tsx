@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import StaggerdMenu from "@/components/StaggerdMenu";
 import GradientText from "@/components/GradientText";
 import Stepper, { Step } from "@/components/Stepper";
@@ -14,6 +14,10 @@ import CSVUpload from "@/components/certification/CSVUpload";
 import CertificateGallery from "@/components/certification/CertificateGallery";
 
 export default function CertificationPage() {
+  // SEO를 위한 동적 메타 태그 추가
+  useEffect(() => {
+    document.title = "기록증 제작 - Run House Club";
+  }, []);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoText, setLogoText] = useState("크루명");
   const [logoFont, setLogoFont] = useState("Arial");
@@ -189,10 +193,10 @@ export default function CertificationPage() {
   };
 
   return (
-    <div className='min-h-screen bg-black text-white relative'>
+    <div className='h-screen bg-black text-white relative overflow-hidden'>
       <StaggerdMenu />
 
-      <div className='container mx-auto px-4 sm:px-6 pt-8 sm:pt-20'>
+      <div className='container mx-auto px-4 sm:px-6 pt-8 sm:pt-20 h-full overflow-y-auto'>
         <div className='text-center mb-6 sm:mb-8'>
           <GradientText
             colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
@@ -291,7 +295,7 @@ export default function CertificationPage() {
                       <div className='flex items-center justify-between'>
                         <div>
                           <h4 className='text-green-300 font-medium'>
-                            📊 총 {participants.length}명의 참가자가
+                            총 {participants.length}명의 참가자가
                             등록되었습니다.
                           </h4>
                           <p className='text-sm text-green-200 mt-1'>

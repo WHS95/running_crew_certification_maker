@@ -56,9 +56,33 @@ export default function CertificatePreview({
   return (
     <div className='lg:sticky lg:top-24 lg:self-start order-first lg:order-last mb-6 lg:mb-0'>
       <div className='bg-white/5 backdrop-blur-sm rounded-lg border border-white/20 p-4 sm:p-6'>
-        <h3 className='text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white text-center'>
-          실시간 미리보기
-        </h3>
+        <div className='flex flex-col sm:flex-row items-center justify-between mb-3 sm:mb-4 gap-2'>
+          <h3 className='text-base sm:text-lg font-semibold text-white text-center sm:text-left'>
+            실시간 미리보기
+          </h3>
+          
+          {/* Mobile Quick Position Buttons */}
+          <div className='flex sm:hidden gap-1'>
+            <button
+              onClick={() => onLogoPositionChange({ x: 20, y: 20 })}
+              className='px-2 py-1 text-xs bg-blue-500/20 text-blue-300 rounded border border-blue-500/30 hover:bg-blue-500/30'
+            >
+              상단
+            </button>
+            <button
+              onClick={() => onLogoPositionChange({ x: containerBounds ? (containerBounds.width - logoSize.width) / 2 : 50, y: containerBounds ? (containerBounds.height - logoSize.height) / 2 : 50 })}
+              className='px-2 py-1 text-xs bg-blue-500/20 text-blue-300 rounded border border-blue-500/30 hover:bg-blue-500/30'
+            >
+              중앙
+            </button>
+            <button
+              onClick={() => onLogoPositionChange({ x: containerBounds ? containerBounds.width - logoSize.width - 20 : 100, y: containerBounds ? containerBounds.height - logoSize.height - 20 : 100 })}
+              className='px-2 py-1 text-xs bg-blue-500/20 text-blue-300 rounded border border-blue-500/30 hover:bg-blue-500/30'
+            >
+              하단
+            </button>
+          </div>
+        </div>
 
         {/* A4 비율 Certificate Preview */}
         <div

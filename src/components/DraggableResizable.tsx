@@ -45,6 +45,37 @@ export default function DraggableResizable({
     }
   }, [position])
 
+  // Touch handlers for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const target = e.target as Element
+    const isResizeHandle = target.closest('.resize-handle')
+    
+    if (!isResizeHandle && e.touches.length === 1) {
+      e.preventDefault()
+      const touch = e.touches[0]
+      setIsDragging(true)
+      setDragStart({
+        x: touch.clientX - position.x,
+        y: touch.clientY - position.y
+      })
+    }
+  }, [position])
+
+  const handleResizeTouchStart = useCallback((e: React.TouchEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (e.touches.length === 1) {
+      const touch = e.touches[0]
+      setIsResizing(true)
+      setResizeStart({
+        x: touch.clientX,
+        y: touch.clientY,
+        width: size.width,
+        height: size.height
+      })
+    }
+  }, [size])
+
   const handleResizeMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -91,21 +122,70 @@ export default function DraggableResizable({
     }
   }, [isDragging, isResizing, dragStart, resizeStart, size, containerBounds, onPositionChange, onSizeChange])
 
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0]
+      
+      if (isDragging) {
+        e.preventDefault()
+        const newX = touch.clientX - dragStart.x
+        const newY = touch.clientY - dragStart.y
+        
+        // Apply bounds if provided
+        let boundedX = newX
+        let boundedY = newY
+        
+        if (containerBounds) {
+          const maxX = containerBounds.width - size.width
+          const maxY = containerBounds.height - size.height
+          boundedX = Math.max(0, Math.min(maxX, newX))
+          boundedY = Math.max(0, Math.min(maxY, newY))
+        }
+        
+        const newPosition = { x: boundedX, y: boundedY }
+        setPosition(newPosition)
+        onPositionChange?.(newPosition)
+      }
+      
+      if (isResizing) {
+        e.preventDefault()
+        const deltaX = touch.clientX - resizeStart.x
+        const deltaY = touch.clientY - resizeStart.y
+        
+        const newWidth = Math.max(20, resizeStart.width + deltaX)
+        const newHeight = Math.max(20, resizeStart.height + deltaY)
+        
+        const newSize = { width: newWidth, height: newHeight }
+        setSize(newSize)
+        onSizeChange?.(newSize)
+      }
+    }
+  }, [isDragging, isResizing, dragStart, resizeStart, size, containerBounds, onPositionChange, onSizeChange])
+
   const handleMouseUp = useCallback(() => {
     setIsDragging(false)
     setIsResizing(false)
   }, [])
 
-  // Add global mouse events
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false)
+    setIsResizing(false)
+  }, [])
+
+  // Add global mouse and touch events
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
+    document.addEventListener('touchmove', handleTouchMove, { passive: false })
+    document.addEventListener('touchend', handleTouchEnd)
     
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
+      document.removeEventListener('touchmove', handleTouchMove)
+      document.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [handleMouseMove, handleMouseUp])
+  }, [handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd])
 
   return (
     <div
@@ -116,25 +196,29 @@ export default function DraggableResizable({
         top: position.y,
         width: size.width,
         height: size.height,
-        border: isDragging || isResizing ? '2px dashed #3b82f6' : '1px solid transparent'
+        border: isDragging || isResizing ? '3px dashed #3b82f6' : '2px solid transparent',
+        touchAction: 'none' // Prevent scrolling on touch
       }}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
     >
       {children}
       
-      {/* Resize handle */}
+      {/* Resize handle - Larger for mobile */}
       <div
-        className="resize-handle absolute bottom-0 right-0 w-3 h-3 bg-blue-500 cursor-se-resize opacity-70 hover:opacity-100"
+        className="resize-handle absolute bottom-0 right-0 w-6 h-6 sm:w-4 sm:h-4 bg-blue-500 cursor-se-resize opacity-70 hover:opacity-100"
         style={{
-          background: 'linear-gradient(-45deg, transparent 30%, #3b82f6 30%, #3b82f6 70%, transparent 70%)'
+          background: 'linear-gradient(-45deg, transparent 30%, #3b82f6 30%, #3b82f6 70%, transparent 70%)',
+          touchAction: 'none'
         }}
         onMouseDown={handleResizeMouseDown}
+        onTouchStart={handleResizeTouchStart}
       />
       
-      {/* Corner indicators */}
-      <div className="absolute top-0 left-0 w-2 h-2 bg-blue-500 rounded-full opacity-50" />
-      <div className="absolute top-0 right-0 w-2 h-2 bg-blue-500 rounded-full opacity-50" />
-      <div className="absolute bottom-0 left-0 w-2 h-2 bg-blue-500 rounded-full opacity-50" />
+      {/* Corner indicators - Larger for mobile */}
+      <div className="absolute top-0 left-0 w-3 h-3 sm:w-2 sm:h-2 bg-blue-500 rounded-full opacity-50" />
+      <div className="absolute top-0 right-0 w-3 h-3 sm:w-2 sm:h-2 bg-blue-500 rounded-full opacity-50" />
+      <div className="absolute bottom-0 left-0 w-3 h-3 sm:w-2 sm:h-2 bg-blue-500 rounded-full opacity-50" />
     </div>
   )
 }
