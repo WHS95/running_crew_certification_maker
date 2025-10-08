@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     url: "https://running-crew-certification-maker.vercel.app",
-    siteName: "Run House Club",
+    siteName: "Run House Club Certification",
     title: "Run House Club - 마라톤 기록증 제작 서비스",
     description:
       "러닝 크루를 위한 맞춤형 마라톤 기록증 제작 서비스. 로고, 색상, 배경을 자유롭게 설정하여 크루만의 특별한 기록증을 만들어보세요.",
