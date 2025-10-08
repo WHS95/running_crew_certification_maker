@@ -43,7 +43,7 @@ export const metadata: Metadata = {
       "러닝 크루를 위한 맞춤형 마라톤 기록증 제작 서비스. 로고, 색상, 배경을 자유롭게 설정하여 크루만의 특별한 기록증을 만들어보세요.",
     images: [
       {
-        url: "/og-image.",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Run House Club - 마라톤 기록증 제작",
