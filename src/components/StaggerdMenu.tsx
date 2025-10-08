@@ -12,7 +12,7 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { label: "HOME", href: "/", icon: "" },
   { label: "CREATE", href: "/certification", icon: "" },
-  { label: "CONTACT", href: "/contact", icon: "" },
+  { label: "CONTACT", href: "https://open.kakao.com/me/runhouse", icon: "" },
 ];
 
 export default function StaggerdMenu() {
@@ -134,6 +134,12 @@ export default function StaggerdMenu() {
                       href={item.href}
                       className='flex items-center space-x-3 sm:space-x-4 text-white hover:text-gray-300 transition-colors text-base sm:text-lg py-2 sm:py-3 px-3 sm:px-4 rounded-lg hover:bg-white/10'
                       onClick={() => setIsOpen(false)}
+                      target={item.href.startsWith("http") ? "_blank" : "_self"}
+                      rel={
+                        item.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                     >
                       <span className='text-lg sm:text-xl md:text-2xl'>
                         {item.icon}

@@ -105,7 +105,7 @@ export default function Home() {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <div className='h-screen bg-black text-white relative overflow-hidden'>
+      <div className='min-h-screen bg-black text-white relative overflow-x-hidden'>
         <div
           style={{
             width: "100%",
@@ -121,8 +121,8 @@ export default function Home() {
         </div>
         <StaggerdMenu />
 
-        <section className='h-screen flex items-center justify-center relative z-10 scroll-section'>
-          <div className='text-center px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center'>
+        <section className='min-h-screen flex items-center justify-center relative z-10 scroll-section'>
+          <div className='text-center px-4 sm:px-6 md:px-8'>
             <ScrollFloat speed={0.1}>
               <div className='text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 block'>
                 <GradientText
@@ -173,8 +173,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className='h-screen flex items-center justify-center relative z-10 scroll-section'>
-          <div className='text-center px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center'>
+        <section className='min-h-screen flex items-center justify-center relative z-10 scroll-section'>
+          <div className='text-center px-4 sm:px-6 md:px-8'>
             <ScrollFloat speed={0.1}>
               <div className='font-bold mb-8 block'>
                 <h2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-8'>
