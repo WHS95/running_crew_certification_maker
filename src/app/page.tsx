@@ -29,19 +29,16 @@ export default function Home() {
           rect.bottom > -window.innerHeight * 0.2;
 
         if (isInView) {
-          const progress = Math.max(
-            0,
-            Math.min(
-              1,
-              (window.innerHeight - rect.top) /
-                (window.innerHeight + rect.height * 0.5)
-            )
+          // Make the top-most section fully opaque, then gently fade/scale as it scrolls up
+          const topProgress = Math.min(
+            1,
+            Math.max(0, -rect.top / (window.innerHeight * 0.8))
           );
 
           gsap.to(section, {
-            opacity: Math.max(0.4, 1 - progress * 0.6),
-            scale: Math.max(0.85, 1 - progress * 0.15),
-            y: progress * -50,
+            opacity: 1 - topProgress * 0.2, // 1.0 at top, down to 0.8
+            scale: 1 - topProgress * 0.08, // subtle scale down
+            y: -topProgress * 30,
             duration: 0.3,
             ease: "power2.out",
           });
@@ -199,7 +196,7 @@ export default function Home() {
               </div>
               <div className='grid md:grid-cols-3 gap-6 md:gap-8 mt-16 scroll-animate px-4 md:px-0'>
                 <SpotlightCard
-                  className='p-4 sm:p-6 md:p-8 h-48 sm:h-56 md:h-64'
+                  className='p-4 sm:p-6 md:p-8 h-48 sm:h-48 md:h-48'
                   spotlightColor='rgba(64, 255, 170, 0.15)'
                   spotlightSize={250}
                 >
@@ -230,16 +227,16 @@ export default function Home() {
                 </SpotlightCard>
 
                 <SpotlightCard
-                  className='p-4 sm:p-6 md:p-8 h-48 sm:h-56 md:h-64'
+                  className='p-4 sm:p-6 md:p-8 h-48 sm:h-48 md:h-48'
                   spotlightColor='rgba(255, 100, 255, 0.15)'
                   spotlightSize={250}
                 >
                   <div className='text-center h-full flex flex-col justify-center'>
                     <h3 className='text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white drop-shadow-lg'>
-                      쉬운 공유
+                      쉬운 생성
                     </h3>
                     <p className='text-white text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-md font-medium'>
-                      카카오톡 공유와 이미지 다운로드로 간편하게 배포하세요
+                      전체 이미지 다운로드로 간편하게 전달 해보세요
                     </p>
                   </div>
                 </SpotlightCard>
